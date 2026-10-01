@@ -1,0 +1,40 @@
+# ============================================================================
+# 换行与二进制处理
+#
+# 首次提交时就定好，避免以后在 Windows / macOS / Linux 之间协作时
+# 出现"整个文件都被改动"的假 diff。
+# ============================================================================
+
+# 默认：由 Git 判断，检出时用平台默认换行
+* text=auto
+
+# ── 必须是 LF 的（在 Linux/macOS 上执行，CRLF 会导致 shebang 失效）──
+*.sh   text eol=lf
+*.mjs  text eol=lf
+*.cjs  text eol=lf
+
+# ── 必须是 CRLF 的（Windows 批处理对换行敏感）──
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+
+# ── 二进制（不做任何换行转换）──
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.exe   binary
+*.dll   binary
+*.node  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.sqlite binary
+*.asar  binary
+
+# ── 语言统计：把生成物排除在 GitHub 的 Linguist 统计之外 ──
+dist-renderer/**  linguist-generated=true
+.vite/**          linguist-generated=true
+package-lock.json linguist-generated=true

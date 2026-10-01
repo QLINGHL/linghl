@@ -1,0 +1,26 @@
+{
+  "codex-webui": {
+    "repository": "https://github.com/lezi-fun/codex-webui",
+    "revision": "f84909859d6f80e40aeaa984d329dd00dcc8e59d",
+    "license": "MIT",
+    "reused": [
+      "shellWords",
+      "hasShellControl",
+      "explorationCommand",
+      "summarizeActivity",
+      "joinActivityParts",
+      "completedActivitySummary",
+      "completedActivityPrimaryItem",
+      "public/style.css: 25 Markdown and 9 command-shell rules, scoped and theme-adapted in conversation.css"
+    ]
+  },
+  "CodexMonitor": {
+    "repository": "https://github.com/Dimillian/CodexMonitor",
+    "revision": "dd61b9abd37de5ded86e82b9fe8a83fd49d46fa5",
+    "license": "MIT",
+    "reused": [
+      "sanitizeReasoningTitle",
+      "parseReasoning"
+    ]
+  }
+}

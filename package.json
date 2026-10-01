@@ -1,0 +1,67 @@
+{
+  "name": "linghl",
+  "productName": "LINGHL",
+  "version": "0.1.0",
+  "description": "多智能体桌面工作台：一个外壳统一接入 Codex、Claude Code 等各类 AI Agent（当前内置 Codex 内核）",
+  "license": "MIT",
+  "author": "qlinghl <qlinghl@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qlinghl/linghl.git"
+  },
+  "homepage": "https://github.com/qlinghl/linghl",
+  "bugs": {
+    "url": "https://github.com/qlinghl/linghl/issues"
+  },
+  "main": ".vite/build/main.js",
+  "scripts": {
+    "start": "node tools/start-direct.cjs",
+    "start:forge": "node tools/start-forge.cjs",
+    "start:direct": "node tools/start-direct.cjs",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
+    "build:renderer": "vite build --config vite.renderer.config.mts",
+    "build:main": "vite build --config vite.main.config.mts",
+    "build:preload": "vite build --config vite.preload.config.mts",
+    "fix-integrity": "node tools/fix-integrity.cjs",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "check": "tsc --noEmit",
+    "test:flow": "node tools/verify-flow.mjs",
+    "test:recents": "node tools/verify-recents.mjs",
+    "test:transport": "node tools/verify-transport.cjs"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.11.2",
+    "@electron-forge/maker-squirrel": "^7.11.2",
+    "@electron-forge/maker-zip": "^7.11.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.2",
+    "@electron-forge/plugin-vite": "^7.11.2",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "electron": "42.3.0",
+    "playwright-core": "^1.56.0",
+    "typescript": "^5.9.3",
+    "vite": "8.2.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-query": "^5.90.0",
+    "katex": "0.16.47",
+    "lucide-react": "^0.552.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "rehype-katex": "^7.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "tailwindcss": "^4.3.3",
+    "vscode-jsonrpc": "8.2.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.8"
+  }
+}

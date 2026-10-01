@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LINGHL</title>
+    <!--
+      ⚠️ 这里刻意**不做启动页**（2026-10-01 决定）。
+
+      背景：之前放过一个"正在启动…"闪屏，用户反馈很直接 —— 它只是把白屏
+      换成了更好看的白屏，用户依然不知道什么时候能好，而且反而更像"卡住了"。
+      正确的方向是让首帧本身变快，而不是把等待装饰起来。所以：
+        1. 首次绘制前不再有任何遮挡物：body 直接是应用背景色，React 一挂载
+           就渲染真实的 HomePage/Sidebar/Composer（数据回来再填进去）。
+        2. 首屏 bundle 拆过（见 App.tsx 的 lazy 注释），不必解析
+           react-markdown/KaTeX/Radix 就能画出第一帧。
+        3. 数据侧：主进程让渲染层请求排队等内核（main.ts 的 waitForKernel），
+           所以"一挂载就发请求"能拿到数据，而不是当场失败再等广播。
+      下面的 <noscript> 只是兜底：JS 彻底挂掉时才说明原因，正常永远看不到。
+    -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      /* 与 global.css 的 --gray-0 / 暗色底一致：先铺应用底色，避免白闪 */
+      body {
+        background: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #1a1a1a;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div
+        style="
+          font-family: -apple-system, 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;
+          font-size: 14px;
+          padding: 40px;
+          color: #5d5d5d;
+        "
+      >
+        界面脚本未能运行。请查看日志：%APPDATA%/codex-desk-replica/logs/boot.log
+      </div>
+    </noscript>
+    <script type="module" src="/src/renderer/src/main.tsx"></script>
+  </body>
+</html>

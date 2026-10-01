@@ -1,0 +1,163 @@
+/* Adapted from lezi-fun/codex-webui public/style.css
+ * Commit: f84909859d6f80e40aeaa984d329dd00dcc8e59d
+ * Copyright (c) 2026 lezi-fun. MIT; see ./LICENSE.
+ * Scope and theme tokens mapped to this project. No official app resources.
+ */
+.flow-thread .prose-chat{font-size:var(--flow-font-size);line-height:calc(var(--flow-font-size) + 8px);color:var(--c-text);overflow-wrap:anywhere}
+.flow-thread .prose-chat p{margin:0 0 .6875rem;font-weight:400}
+.flow-thread .prose-chat>p:has(+ul),.flow-thread .prose-chat>p:has(+ol){margin-bottom:.625rem}
+.flow-thread .prose-chat>ul+p,.flow-thread .prose-chat>ol+p{margin-top:1rem}
+.flow-thread .prose-chat ul,.flow-thread .prose-chat ol{margin:0;padding-inline-start:1.3125rem;list-style-position:outside}
+.flow-thread .prose-chat ul{list-style-type:disc}.flow-thread .prose-chat ol{list-style-type:decimal}
+.flow-thread .prose-chat ul ul{list-style-type:circle}.flow-thread .prose-chat ul ul ul{list-style-type:square}
+.flow-thread .prose-chat li{min-height:0;margin:0;padding-inline-start:.125rem;display:list-item}
+.flow-thread .prose-chat li+li{margin-top:.5rem}
+.flow-thread .prose-chat li>:first-child{margin-top:0;margin-bottom:0}
+.flow-thread .prose-chat li>:last-child{margin-bottom:0}
+.flow-thread .prose-chat li>p{margin:0}.flow-thread .prose-chat li>p+p{margin-top:.6875rem}
+.flow-thread .prose-chat li>ul,.flow-thread .prose-chat li>ol{margin-top:.5rem;margin-bottom:0}
+.flow-thread .prose-chat h1,.flow-thread .prose-chat h2,.flow-thread .prose-chat h3,.flow-thread .prose-chat h4,.flow-thread .prose-chat h5,.flow-thread .prose-chat h6{margin:20px 0 10px;font-weight:600;line-height:1.25;color:var(--c-text)}
+.flow-thread .prose-chat h1{font-size:24px}.flow-thread .prose-chat h2{font-size:20px}
+.flow-thread .prose-chat h3,.flow-thread .prose-chat h4{font-size:17px;line-height:22px}
+.flow-thread .prose-chat h5,.flow-thread .prose-chat h6{font-size:15px;line-height:20px}
+.flow-thread .prose-chat code{border:0;border-radius:6px;padding:1px 6px;background:color-mix(in srgb,var(--c-bg-hover) 60%,var(--c-text) 6%);font-family:Consolas, "Cascadia Code", monospace;font-size:.92em;overflow-wrap:anywhere;word-break:break-word}
+.flow-thread .prose-chat pre{margin-block:14px}
+.flow-thread .prose-chat pre code{padding:0;border:0;border-radius:0;background:transparent;font:12px/20px Consolas, "Cascadia Code", monospace}
+.flow-thread .prose-chat blockquote{position:relative;margin:0 0 8px;padding:8px 0 8px 24px;border:0;background:transparent;color:var(--c-text);font-style:normal;line-height:24px}
+.flow-thread .prose-chat blockquote>:first-child{margin-top:0}.flow-thread .prose-chat blockquote>:last-child{margin-bottom:0}
+.flow-thread .prose-chat blockquote:after{content:"";position:absolute;inset-inline-start:0;top:8px;bottom:8px;width:4px;border-radius:2px;background:var(--c-border)}
+.flow-thread .prose-chat hr{clear:both;height:0;margin:28px 0;border:0;border-top:1px solid var(--c-border)}
+.flow-thread .prose-chat hr+*{margin-top:0}
+.flow-thread .flow-shell{overflow:hidden;border:1px solid color-mix(in oklab,var(--c-text) 12%,transparent);border-radius:8px;background:color-mix(in srgb,var(--c-text) 6%,var(--c-bg))}
+.flow-thread .flow-shell-command{display:flex;align-items:flex-start;padding:8px 32px 0 8px;color:var(--c-text-3);font:12px/18px Consolas, "Cascadia Code", monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.flow-thread .flow-shell-command>span{flex:0 0 auto;margin-right:1ch;color:var(--c-text-3);user-select:none}
+.flow-thread .flow-shell-command code{display:-webkit-box;min-width:0;max-height:36px;overflow:hidden;color:inherit;font:inherit;white-space:pre-wrap;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.flow-thread .flow-shell-output{max-height:144px;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--c-border) transparent}
+.flow-thread .flow-shell-output pre{min-width:100%;width:max-content;min-height:18px;margin:0;padding:8px;color:var(--c-text);font:600 12px/18px Consolas, "Cascadia Code", monospace;white-space:pre}
+.flow-thread .flow-shell-output pre.empty{width:100%;color:var(--c-text-3);font-weight:400}
+.flow-thread .flow-shell-footer{min-height:7px;display:flex;align-items:center;justify-content:flex-end;gap:4px;padding:2px 10px 4px;color:var(--c-text-3);font-size:13px;line-height:20px}
+.flow-thread .flow-shell-footer .icon-slot,.flow-thread .flow-shell-footer .icon-slot svg{width:12px;height:12px;min-width:12px}
+
+/* React host adapter: row alignment, focus targets and constrained content. */
+.flow-thread { --flow-font-size: 14px; --flow-row-gap: 4px; }
+.flow-thread .prose-chat > :first-child { margin-top: 0; }
+.flow-thread .prose-chat > :last-child { margin-bottom: 0; }
+.flow-thread .flow-activity { gap: 16px; padding-block: 8px; }
+.flow-thread .flow-cluster { gap: var(--flow-row-gap); }
+.flow-thread .flow-event { min-width: 0; }
+.flow-thread .flow-activity-trigger {
+  display: inline-flex; align-items: center; align-self: flex-start;
+  min-width: 0; max-width: 100%; min-height: 22px;
+  gap: 4px; padding: 0; font-size: var(--flow-font-size); line-height: 22px;
+  text-align: left; color: color-mix(in srgb, var(--c-text) 60%, transparent);
+}
+.flow-thread .flow-activity-trigger > svg, .flow-thread .flow-activity-trigger > span > svg { flex: 0 0 auto; width: 16px; height: 16px; }
+.flow-thread .flow-activity-trigger svg { stroke-width: 1.7; }
+.flow-thread .flow-activity-trigger:has(.lucide-triangle-alert) { color: var(--red-500, #e02e2a); }
+.flow-thread .flow-activity-trigger > .lucide-chevron-right { width: 16px; height: 16px; }
+.flow-thread .flow-activity-trigger:hover { color: var(--c-text); }
+.flow-thread .flow-activity-trigger:focus-visible { outline: 1px solid var(--c-text-3); outline-offset: 3px; border-radius: 4px; }
+.flow-thread .flow-activity-copy { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Shell 卡片：官方实测（1441×913 CSS 视口）——与内容左边缘齐平、满宽 736，
+   底色 #f2f3f3、1px 描边 #d9dadb、圆角 10，命令 12/20 等宽灰字夹两行，
+   输出 12/20 等宽灰字可双向滚动（高约 130），底部右对齐「✓ Success」。 */
+.flow-thread .flow-shell {
+  margin: 5px 0 10px; min-width: 0; overflow: hidden;
+  border: 1px solid var(--c-shell-border); border-radius: 10px; background: var(--c-shell-bg);
+}
+.flow-thread .flow-shell-heading { padding: 6px 9px 0; font-size: 13px; line-height: 20px; color: var(--c-text-3); }
+.flow-thread .flow-shell-command { padding: 10px 9px 0; color: var(--c-shell-command-fg); font: 12px/20px Consolas, "Cascadia Code", monospace; }
+.flow-thread .flow-shell-command code { display: -webkit-box; max-height: 40px; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.flow-thread .flow-shell-output { margin: 9px 0 0 9px; max-height: 130px; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--c-border) transparent; }
+.flow-thread .flow-shell-output pre { color: var(--c-shell-output-fg); font: 400 12px/20px Consolas, "Cascadia Code", monospace; }
+.flow-thread .flow-shell-footer { min-height: 18px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; padding: 6px 11px 8px; color: var(--c-text-3); font-size: 13px; line-height: 18px; }
+.flow-thread .flow-reasoning-detail { max-height: 160px; overflow-y: auto; }
+/* 折叠头：官方在「Worked for …」下方有 1px 极淡分隔线（实测 #ededed），下方内容再让出 16px */
+.flow-thread .flow-work-header { padding-block: 0 3px; border: 0; border-bottom: 1px solid var(--c-border-soft); font-size: 14px; line-height: 20px; }
+.flow-thread .flow-work-header button { max-width: 100%; }
+
+/* 回合错误横幅：官方实测满内容宽、1px 描边、ⓘ 18.3 在左 20、正文 14px */
+.flow-thread .flow-turn-error {
+  display: flex; align-items: center; gap: 15px; margin: 12px 0 6px;
+  padding: 14px 18px; border: 1px solid var(--c-card-border); border-radius: 14px;
+  font-size: 14px; line-height: 21px; color: var(--c-text);
+}
+.flow-thread .flow-turn-error > svg { flex: 0 0 auto; color: var(--c-text-3); }
+
+/* 回合级「改动文件」卡片（官方 View changed files）：满宽、1px 描边 #e3e3e4、圆角 14 */
+.flow-thread .flow-changed { margin: 10px 0 6px; border: 1px solid var(--c-card-border); border-radius: 14px; background: var(--c-bg); }
+.flow-thread .flow-changed-head { display: flex; align-items: center; gap: 12px; padding: 13px 19px 13px 20px; }
+.flow-thread .flow-changed-icon { display: flex; height: 46px; width: 46px; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 12px; background: var(--c-bg-sub); color: var(--c-text-2); }
+.flow-thread .flow-changed-meta { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.flow-thread .flow-changed-name { font-size: 15px; line-height: 21px; font-weight: 500; color: var(--c-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flow-thread .flow-changed-total { display: flex; gap: 8px; font-size: 14px; line-height: 20px; }
+.flow-thread .flow-add { color: var(--green-500); }
+.flow-thread .flow-del { color: var(--red-500); }
+.flow-thread .flow-changed-undo { display: inline-flex; height: 29px; align-items: center; gap: 6px; padding: 0 6px; font-size: 15px; color: var(--c-text); border-radius: 8px; }
+.flow-thread .flow-changed-undo:hover { background: var(--c-bg-hover); }
+.flow-thread .flow-changed-view { display: inline-flex; height: 29px; flex: 0 0 auto; align-items: center; padding: 0 14px; font-size: 15px; color: var(--c-text); border: 1px solid var(--c-card-border); border-radius: 999px; }
+.flow-thread .flow-changed-view:hover { background: var(--c-bg-hover); }
+.flow-thread .flow-changed-list { border-top: 1px solid var(--c-card-border); border-radius: 0 0 13px 13px; overflow: hidden; }
+.flow-thread .flow-changed-row { display: flex; align-items: center; gap: 16px; min-height: 37px; padding: 0 19px 0 20px; }
+.flow-thread .flow-changed-row:hover { background: var(--c-bg-hover); }
+.flow-thread .flow-changed-path { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; color: var(--c-text); }
+.flow-thread .flow-changed-row-stats { display: flex; flex: 0 0 auto; gap: 6px; font-size: 14px; }
+.flow-thread .flow-changed-more { display: flex; align-items: center; gap: 4px; width: 100%; min-height: 38px; padding: 0 19px 0 20px; font-size: 14px; color: var(--c-text); text-align: left; }
+.flow-thread .flow-changed-more:hover { background: var(--c-bg-hover); }
+.flow-thread .flow-changed-more > svg { color: var(--c-text-3); }
+
+/* 卡片 hover：上方浮出该文件的 diff 预览（官方实测：白底圆角卡 + 阴影 + 行号/增删标记 + 横向滚动），
+   同时副标题由「+N -M」换成「View changes ↗」 */
+/* 卡片 hover 底色：由 state 驱动的 class 控制，**不能用 :hover**。
+   浮层是卡片的子节点，:hover 会把「鼠标已移到浮层上」也算成卡片 hover，
+   而这个交互的要求正好相反：离开卡片（哪怕落到浮层上）底色就要立刻复原。 */
+.flow-thread .flow-changed { position: relative; }
+.flow-thread .flow-changed.flow-changed-hover { background: var(--c-bg-sub); }
+.flow-thread .flow-changed-viewlink { display: inline-flex; align-items: center; gap: 3px; font-size: 14px; line-height: 20px; color: var(--c-text-3); }
+/* 浮层用 fixed + 打开瞬间锁定的视口锚点（left/width/bottom 由组件写成行内样式）：
+   回复流式生成时卡片上方内容会长高、把卡片顶下去，绝对定位的浮层会跟着一起甩，
+   光标瞬间落到浮层外 → hover 丢失、浮层消失。锁死位置后浮层不再跟着重排移动。 */
+.flow-thread .flow-diff-preview {
+  position: fixed; z-index: 60;
+  overflow: hidden;
+  /* 底色必须是不透明实色：fixed 定位脱离了 .flow-thread 的层叠上下文，
+     浮层下面的流式正文会直接透出来（实测截图里能看到文字穿过浮层） */
+  background-color: var(--c-bg, #ffffff);
+  border: 1px solid var(--c-card-border, #e3e3e4); border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+  /* 浮现时淡入一下（出场是瞬时的：指针一离开卡片就收） */
+  animation: flow-diff-preview-in 120ms ease-out both;
+}
+@keyframes flow-diff-preview-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-thread .flow-diff-preview { animation: none; }
+}
+.flow-thread .flow-diff-preview-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 14px; font-size: 14px; line-height: 20px; color: var(--c-text); }
+.flow-thread .flow-diff-preview-path { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flow-thread .flow-diff-preview-stats { display: flex; flex: 0 0 auto; gap: 6px; }
+.flow-thread .flow-diff-preview-body { max-height: 130px; overflow: auto; padding-bottom: 6px; font: 12px/20px Consolas, "Cascadia Code", monospace; scrollbar-width: thin; scrollbar-color: var(--c-border) transparent; }
+.flow-thread .flow-diff-line { display: flex; align-items: baseline; gap: 8px; padding: 0 12px; white-space: pre; }
+.flow-thread .flow-diff-add { background: var(--c-diff-add-bg); }
+.flow-thread .flow-diff-del { background: var(--c-diff-del-bg); }
+.flow-thread .flow-diff-no { flex: 0 0 auto; width: 26px; text-align: right; color: var(--c-text-3); }
+.flow-thread .flow-diff-mark { flex: 0 0 auto; width: 8px; color: var(--c-text-3); }
+.flow-thread .flow-diff-add .flow-diff-mark { color: var(--green-500); }
+.flow-thread .flow-diff-del .flow-diff-mark { color: var(--red-500); }
+.flow-thread .flow-diff-text { color: var(--c-text); }
+
+/* 正文里的链接：官方本地文件链接 = 文件图标 + 蓝字无下划线；外链普通处理 */
+.flow-thread .prose-chat .flow-file-link { display: inline-flex; align-items: center; gap: 4px; color: var(--c-link); }
+.flow-thread .prose-chat .flow-file-link > svg { flex: 0 0 auto; }
+.flow-thread .prose-chat a.flow-link { color: var(--c-link); text-decoration: none; }
+.flow-thread .prose-chat a.flow-link:hover { text-decoration: underline; }
+.flow-thread .prose-chat table { display: block; max-width: 100%; width: max-content; min-width: 60%; overflow-x: auto; border-collapse: collapse; margin-block: 16px; }
+.flow-thread .prose-chat th, .flow-thread .prose-chat td { padding: 10px 16px; border: 0; border-bottom: 1px solid var(--c-border); line-height: 24px; }
+.flow-thread .prose-chat th { font-weight: 600; }
+.flow-thread .prose-chat tr:last-child td { border-bottom: 0; }
+.flow-thread .prose-chat .katex-display { margin: 16px 0; }
+.flow-thread header h1 { min-width: 0; flex: 1; }
+@media (max-width: 600px) { .flow-thread .flow-shell { margin-left: 0; } .flow-thread .prose-chat table { min-width: 100%; } }

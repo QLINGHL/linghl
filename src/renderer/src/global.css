@@ -1,0 +1,295 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   设计令牌（明 / 暗双主题）
+   数值为通用的中性灰阶体系：以 #0d0d0d 近黑为文字、#f9f9f9 浅灰为侧栏底色
+--------------------------------------------------------------------------- */
+:root {
+  /* 原生控件（select 下拉面板 / 滚动条）跟随主题；缺了它暗色下原生下拉是白底黑字 */
+  color-scheme: light;
+
+  --gray-0: #ffffff;
+  --gray-25: #fcfcfc;
+  --gray-50: #f9f9f9;
+  --gray-75: #f3f3f3;
+  --gray-100: #ededed;
+  --gray-150: #dfdfdf;
+  --gray-200: #cdcdcd;
+  --gray-300: #afafaf;
+  --gray-400: #8f8f8f;
+  --gray-500: #5d5d5d;
+  --gray-600: #414141;
+  --gray-700: #303030;
+  --gray-800: #212121;
+  --gray-900: #181818;
+  --gray-950: #131313;
+  --gray-1000: #0d0d0d;
+
+  --orange-50: #ffe7d9;
+  --orange-300: #ff8549;
+  --orange-400: #fb6a22;
+  --orange-500: #e25507;
+  --orange-700: #923b0f;
+
+  --red-400: #fa423e;
+  --red-500: #e02e2a;
+  --blue-400: #0285ff;
+  --blue-500: #0169cc;
+  --green-400: #04b84c;
+  --green-500: #00a240;
+
+  /* 语义层（浅色主题） */
+  --c-bg: var(--gray-0);
+  --c-bg-sub: var(--gray-50);
+  --c-bg-hover: var(--gray-100);
+  --c-bg-active: var(--gray-150);
+  --c-bg-raised: var(--gray-75);
+  --c-text: var(--gray-1000);
+  --c-text-2: var(--gray-500);
+  --c-text-3: var(--gray-400);
+  --c-border: var(--gray-150);
+  /* Composer 项目条底部那条极淡分隔线（官方实测 #e9e9e9，比 --c-border 浅一档） */
+  --c-border-soft: #e9e9e9;
+  /* Shell 命令卡片（官方实测：底 #f2f3f3、描边 #d9dadb、命令字 #5b5e60、输出字 #7d7d7d） */
+  --c-card-border: #e3e3e4;
+  /* 正文链接（官方实测 #3284D4） */
+  --c-link: #3284d4;
+  --c-shell-bg: #f2f3f3;
+  --c-shell-border: #d9dadb;
+  --c-shell-command-fg: #5b5e60;
+  --c-shell-output-fg: #7d7d7d;
+  --c-accent: var(--orange-500);
+  --c-accent-soft: var(--orange-50);
+
+  /* 实心主按钮（发送 / 批准 / 添加 / 登录…）：底色与前景必须成对出现，
+     暗色主题下整对反转。历史上底色用 --c-send、字写死 var(--gray-0)，
+     结果暗色下 = 近白底 + 白字，整个按钮糊成一片。 */
+  --c-send: var(--gray-1000);
+  --c-send-text: var(--gray-0);
+  --c-send-off: var(--gray-400);
+  --c-send-off-text: var(--gray-0);
+
+  /* 开关关闭态轨道 */
+  --c-switch-off: var(--gray-200);
+
+  /* 代码 diff 增 / 删行 */
+  --c-diff-add-bg: #e7f7ee;
+  --c-diff-add-fg: #1a7f37;
+  --c-diff-del-bg: #ffebe9;
+  --c-diff-del-fg: #cf222e;
+
+  /* 浮层遮罩 */
+  --c-scrim: rgb(0 0 0 / 0.1);
+
+  /* Composer 容器 elevation：抄官方 --elevation-composer
+     （三层叠加：1px 极淡描边 + 2px 轻投影 + 4px/80px 大范围光晕，所以不需要 border）
+     官方值 0 0 0 1px #0000000a, 0 2px 8px 0 #0000000a, 0 4px 80px 8px #00000006 */
+  --elev-composer: 0 0 0 1px rgb(0 0 0 / 0.04), 0 2px 8px 0 rgb(0 0 0 / 0.04), 0 4px 80px 8px rgb(0 0 0 / 0.024);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --c-bg: var(--gray-950);
+  --c-bg-sub: var(--gray-900);
+  --c-bg-hover: var(--gray-850, #212121);
+  --c-bg-active: #282828;
+  --c-bg-raised: #1f1f1f;
+  --c-text: #f3f3f3;
+  --c-text-2: #afafaf;
+  --c-text-3: #767676;
+  --c-border: #282828;
+  --c-border-soft: #2e2e2e;
+  --c-card-border: #333333;
+  --c-link: #4f9dde;
+  --c-shell-bg: #202020;
+  --c-shell-border: #333333;
+  --c-shell-command-fg: #c8c8c8;
+  --c-shell-output-fg: #9a9a9a;
+  --c-accent: var(--orange-400);
+  --c-accent-soft: rgb(251 106 34 / 0.16);
+
+  /* 暗色下实心按钮反转：近白底 + 深字（这就是"白字看不见"的修复点） */
+  --c-send: #f3f3f3;
+  --c-send-text: #0d0d0d;
+  --c-send-off: #3a3a3a;
+  --c-send-off-text: #8f8f8f;
+
+  --c-switch-off: #3f3f3f;
+
+  --c-diff-add-bg: rgb(4 184 76 / 0.15);
+  --c-diff-add-fg: #66d492;
+  --c-diff-del-bg: rgb(250 66 62 / 0.15);
+  --c-diff-del-fg: #ff8583;
+
+  --c-scrim: rgb(0 0 0 / 0.45);
+
+  /* 深色下官方只用一条内描边（--elevation-composer-dark: inset 0 0 1px 0 #fff3） */
+  --elev-composer: inset 0 0 1px 0 rgb(255 255 255 / 0.2);
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-bgsub: var(--c-bg-sub);
+  --color-bghover: var(--c-bg-hover);
+  --color-bgactive: var(--c-bg-active);
+  --color-text: var(--c-text);
+  --color-text2: var(--c-text-2);
+  --color-text3: var(--c-text-3);
+  --color-border: var(--c-border);
+  --color-accent: var(--c-accent);
+  --font-sans: "Segoe UI", "Microsoft YaHei UI", "PingFang SC", system-ui, sans-serif;
+  /* duration-basic：让 ThreadView 里所有折叠箭头的 transition-duration 生效 */
+  --duration-basic: 0.15s;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 自定义标题栏拖拽区 */
+.app-drag {
+  -webkit-app-region: drag;
+}
+.app-no-drag {
+  -webkit-app-region: no-drag;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--c-text) 18%, transparent);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--c-text) 30%, transparent);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-up {
+  animation: fade-up 0.25s ease both;
+}
+
+/* ---------------------------------------------------------------------------
+   等待指示：回合已提交但模型尚未吐首字时显示。
+   官方 .loading-shimmer-pure-text 逐值移植（渐变文字扫光），
+   变量映射：--text-primary → --c-text、--text-quaternary → --c-text-3
+--------------------------------------------------------------------------- */
+@keyframes loading-shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  to {
+    background-position: 250% 0;
+  }
+}
+.shimmer-text {
+  background: var(--c-text-3) linear-gradient(to right, var(--c-text-3) 0%, var(--c-text-2) 50%, var(--c-text-3) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: loading-shimmer 5s steps(120, end) infinite;
+  animation-delay: 0.5s;
+}
+/* 官方在 reduce-motion 下整只停掉；这里回落到实色文字 */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-text {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* Markdown 正文 */
+.prose-chat {
+  line-height: 1.7;
+  word-break: break-word;
+}
+.prose-chat .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.15em;
+}
+.prose-chat p {
+  margin: 0.35em 0;
+}
+.prose-chat ul,
+.prose-chat ol {
+  margin: 0.35em 0;
+  padding-left: 1.4em;
+}
+.prose-chat ul {
+  list-style: disc;
+}
+.prose-chat ol {
+  list-style: decimal;
+}
+.prose-chat h1,
+.prose-chat h2,
+.prose-chat h3 {
+  font-weight: 650;
+  margin: 0.6em 0 0.3em;
+}
+.prose-chat code {
+  background: color-mix(in srgb, var(--c-text) 7%, transparent);
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+  font-size: 0.92em;
+  font-family: Consolas, "Courier New", monospace;
+}
+.prose-chat pre {
+  background: var(--c-bg-sub);
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  overflow: auto;
+  margin: 0.5em 0;
+}
+.prose-chat pre code {
+  background: transparent;
+  padding: 0;
+}
+.prose-chat a {
+  color: var(--blue-500);
+  text-decoration: underline;
+}
+.prose-chat blockquote {
+  border-left: 3px solid var(--c-border);
+  padding-left: 10px;
+  color: var(--c-text-2);
+  margin: 0.4em 0;
+}
+.prose-chat table {
+  border-collapse: collapse;
+  margin: 0.5em 0;
+}
+.prose-chat td,
+.prose-chat th {
+  border: 1px solid var(--c-border);
+  padding: 4px 10px;
+}
